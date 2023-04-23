@@ -9,13 +9,20 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
+    public function index()
+    {
+        if (Auth::check()) {
+            return redirect()->intended(route('admin.home'));
+        }
+
+        return view('admin.layouts.login');
+    }
+
     public function login(Request $request) : RedirectResponse
     {
         if (Auth::check()) {
-            redirect()->intended(route('admin.home'));
+           return redirect()->intended(route('admin.home'));
         }
-
-//        $credentials = $request->only(['email', 'password']);
 
         $credentials = $request->validate([
             'email' => ['required', 'email'],

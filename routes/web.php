@@ -1,10 +1,9 @@
 <?php
 
+use App\Http\Controllers\admin\HomeController;
 use App\Http\Controllers\admin\LogoutController;
 use App\Http\Controllers\admin\RegistrationController;
 use App\Http\Controllers\admin\LoginController;
-use App\Http\Controllers\RegisterController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -58,20 +57,20 @@ Route::get('/', function () {
 
 
 /** Start my routes */
+Route::get('admin', function () {
+    return redirect(route('admin.login.show'));
+});
+
 Route::name('admin.')->group(function () {
     Route::get('admin/registration', [RegistrationController::class, 'create'])->name('registration.create');
 
     Route::post('admin/registration', [RegistrationController::class, 'store'])->name('registration.store');
 
-    Route::get('admin/home', function () {
-       return view('admin.layouts.home');
-    })->name('home');
+    Route::get('admin/home', [HomeController::class, 'index'])->name('home');
 
     Route::get('admin/logout', [LogoutController::class, 'logout'])->name('logout');
 
-    Route::get('admin/login', function () {
-        return view('admin.layouts.login');
-    })->name('login.show');
+    Route::get('admin/login', [LoginController::class, 'index'])->name('login.show');
 
     Route::post('admin/login', [LoginController::class, 'login'])->name('login.auth');
 });

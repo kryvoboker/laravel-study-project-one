@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Auth;
 
 class LogoutController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
     public function logout(Request $request) : RedirectResponse
     {
         Auth::logout();
